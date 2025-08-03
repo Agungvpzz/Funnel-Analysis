@@ -26,7 +26,8 @@ This analysis is based on a three-stage user journey extracted from the electron
   - **Cart**: The user adds a product to their shopping cart, indicating intent to purchase.
   - **Purchase**: The user completes the transaction, marking the final conversion.
 
-## Exploratory Data Analysis
+
+## Funnel Analysis
 
 ### Funnel Proportion
 <p align=center>
@@ -42,15 +43,6 @@ This shows strong interest up front, but major drop-offs at the cart stage.
 
 
 ### Funnel Proportion by Price Category
-To enrich the analysis, we derive a new column from price column by cut them into 4 separate categories.
-dfl.with_columns(
-    pl.when(pl.col("price") < 10).then(pl.lit("low"))
-      .when(pl.col("price") < 100).then(pl.lit("medium"))
-      .when(pl.col("price") < 1000).then(pl.lit("high"))
-      .otherwise(pl.lit("premium"))
-      .alias("price_category")
-)
-
 <p align=center>
   <img width="881" height="248" alt="image" src="https://github.com/user-attachments/assets/ec320a72-efb1-405a-9bb1-891bc0343309" />
 </p>
@@ -87,3 +79,58 @@ Repeat purchases are rare among the 393,080 unique customers in the dataset:
 - The numbers drop rapidly, with only 42 customers reaching 10 purchases
 
 This steep decline suggests limited long-term customer engagement and presents a clear opportunity to improve retention strategies.
+
+
+## Brand Analysis
+
+### Top 5 Revenue-Generating Brands
+**1. Top Performer by Revenue: MSI**
+- Total Revenue: `$641,430.34`
+- Avg. Product Price: `$361.327`
+- Unique Visitors: 7,639
+- Conversion Rate: 14.7% (1120 users)
+
+
+MSI leads the group in overall revenue and demonstrates strong efficiency in converting users into buyers. Despite having fewer unique users and visitors compared to others, it boasts high conversion rates and revenue per user. Its strong funnel metrics, such as a 57.2% purchase-from-cart rate, indicate a well-optimized purchase journey.
+
+**2. High Traffic, Low Conversion: All Unknown Brand**
+- Total Revenue: `$586,618.99`
+- Avg. Product Price: `$77.5`
+- Unique Visitors: 113,984 (highest, since It includes entries with unknown brand names across all niche product categories)
+- Conversion Rate: 5.0% (5741 users)
+
+The unknown brand drives significant traffic and interactions, with the highest views and users. However, its conversion rate is the lowest among the top five. Despite this, it achieves strong revenue by sheer volume and a relatively high purchase-from-cart rate (75.96%), implying that once users add products to cart, they often convert.
+
+**3. Gigabyte: Balanced Performer**
+- Total Revenue: `$550,079.82`
+- Avg. Product Price: `$320.858`
+- Unique Visitors: 9,286
+- Conversion Rate: 12.0% (1111 users)
+
+Gigabyte shows a balanced funnel with strong mid-level traffic and high conversion efficiency. With similar purchase and view metrics as MSI, it reflects a well-performing brand with a slightly lower average order value but consistent user engagement.
+
+**4. Palit: High Conversion, Low Scale**
+- Total Revenue: `$483,691.82`
+- Avg. Product Price: `$467.053`
+- Unique Visitors: 9,901
+- Conversion Rate: 7.9% (778 users)
+
+Palit, while engaging fewer users, achieves the highest purchase-per-product-sold, indicating focused user intent and high product appeal. It's a niche performer with excellent product-level performance and a strong revenue per user ($621.71).
+
+**5. ASUS: Modest All-Rounder**
+- Total Revenue: `$325,680.44`
+- Avg. Product Price: `$242.781`
+- Unique Visitors: 11,850
+- Conversion Rate: 6.7% (790 users)
+
+ASUS shows moderate performance across all funnel stages, with decent engagement and respectable conversion rates. It does not lead in any one area but performs consistently across the board.
+
+
+### Top 3 Best-Selling Product Categories per Top 5 Brands
+Across all brands, videocards dominate sales, consistently appearing as the leading niche. Here's the breakdown:
+- MSI leads total sales at 641K, with 99% concentrated in videocards.
+- The ‘Unknown’ brand ranks second (586K), driven by videocards, uncategorized items, and telephones.
+- Gigabyte closely follows (550K), showing strong performance in videocards and motherboards, though monitor sales are negligible.
+- Palit’s entire sales volume (483K) comes from videocards, indicating a highly focused product strategy.
+- ASUS earns ~326K, with a diverse portfolio across videocards, motherboards, and Wi-Fi peripherals, contributing 98% of total sales.
+
